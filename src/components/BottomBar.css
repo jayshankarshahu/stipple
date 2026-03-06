@@ -1,0 +1,85 @@
+.bottom-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    background-color: var(--bg-secondary);
+    border-top: 1px solid var(--border);
+    user-select: none;
+    flex-shrink: 0;
+    gap: 8px;
+}
+
+/* ─── Action buttons row ─── */
+
+.bottom-bar__actions {
+    display: flex;
+    gap: 6px;
+}
+
+.bottom-bar__action {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 6px 14px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    background-color: var(--bg-surface);
+    font-family: var(--font-family);
+    transition: color var(--transition-fast),
+        background-color var(--transition-fast),
+        border-color var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+.bottom-bar__action:hover {
+    color: var(--text-primary);
+    background-color: var(--bg-hover);
+    border-color: rgba(137, 180, 250, 0.2);
+}
+
+.bottom-bar__action:active {
+    transform: scale(0.97);
+}
+
+.bottom-bar__action--active {
+    color: var(--accent);
+    background-color: var(--tag-bg);
+    border-color: var(--accent);
+}
+
+.bottom-bar__action--active .bottom-bar__action-icon {
+    color: var(--accent);
+}
+
+.bottom-bar__action-icon {
+    font-size: 13px;
+    color: var(--accent);
+    line-height: 1;
+}
+
+/* ─── Badge ─── */
+
+.bottom-bar__badge {
+    font-size: 10px;
+    font-weight: 600;
+    background-color: var(--tag-bg);
+    color: var(--accent);
+    padding: 0 5px;
+    border-radius: 8px;
+    min-width: 16px;
+    text-align: center;
+    line-height: 16px;
+}
+
+/* ─── Saved indicator ─── */
+
+.bottom-bar__saved {
+    font-size: 11px;
+    color: var(--text-muted);
+    white-space: nowrap;
+}

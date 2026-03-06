@@ -1,0 +1,103 @@
+.top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 44px;
+    padding: 0 8px;
+    background-color: var(--bg-secondary);
+    border-bottom: 1px solid var(--border);
+    user-select: none;
+    flex-shrink: 0;
+    gap: 2px;
+    transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+.top-bar__nav {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--accent);
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
+    transition: background-color var(--transition-fast),
+        color var(--transition-fast),
+        opacity var(--transition-fast);
+    flex-shrink: 0;
+}
+
+.top-bar__nav:hover:not(.top-bar__nav--disabled) {
+    background-color: var(--bg-hover);
+    color: var(--accent-hover);
+}
+
+.top-bar__nav:active:not(.top-bar__nav--disabled) {
+    transform: scale(0.97);
+}
+
+.top-bar__nav--disabled {
+    color: var(--text-muted);
+    cursor: default;
+    opacity: 0.4;
+}
+
+.top-bar__nav-icon {
+    font-size: 18px !important;
+}
+
+/* ─── Clickable date with date picker ─── */
+
+.top-bar__date-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex: 1;
+    justify-content: center;
+}
+
+.top-bar__date {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: 0.01em;
+    background: none;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 4px 8px;
+    cursor: pointer;
+    font-family: var(--font-family);
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.top-bar__date:hover {
+    background-color: var(--bg-hover);
+    color: var(--accent);
+}
+
+.top-bar__date-icon {
+    font-size: 14px !important;
+    opacity: 0.6;
+    transition: opacity var(--transition-fast);
+}
+
+.top-bar__date:hover .top-bar__date-icon {
+    opacity: 1;
+}
+
+/* Hidden native date input — visually invisible but functionally active */
+.top-bar__date-input {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+    border: none;
+}

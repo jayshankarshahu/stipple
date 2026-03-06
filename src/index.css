@@ -1,0 +1,139 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap');
+
+/* ─── Design System: Dark Theme (default) ─── */
+
+:root {
+  /* Backgrounds */
+  --bg-primary: #0d0f17;
+  --bg-secondary: #11141f;
+  --bg-surface: #161922;
+  --bg-hover: #1e2235;
+
+  /* Text */
+  --text-primary: #e8eaf0;
+  --text-secondary: #9ea3b8;
+  --text-muted: #555a72;
+
+  /* Accent — Indigo family */
+  --accent: #818cf8;
+  --accent-hover: #a5b4fc;
+  --accent-glow: rgba(129, 140, 248, 0.15);
+
+  /* Borders & surfaces */
+  --border: #1e2235;
+  --tag-bg: #1a1f35;
+  --tag-text: #818cf8;
+
+  /* Semantic */
+  --danger: #f87171;
+  --success: #4ade80;
+
+  /* Type */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Radii */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+}
+
+/* ─── Light Theme ─── */
+
+[data-theme="light"] {
+  --bg-primary: #edeae3;
+  --bg-secondary: #e4e0d8;
+  --bg-surface: #f5f2eb;
+  --bg-hover: #dedad1;
+
+  --text-primary: #1c1c28;
+  --text-secondary: #4b4f6b;
+  --text-muted: #8a8ea3;
+
+  --accent: #4f5bd5;
+  --accent-hover: #3b47bf;
+  --accent-glow: rgba(79, 91, 213, 0.14);
+
+  --border: #cdc9bf;
+  --tag-bg: #dfe2f7;
+  --tag-text: #4f5bd5;
+
+  --danger: #d63031;
+  --success: #1e7e34;
+}
+
+/* ─── Reset & Base ─── */
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 400px;
+  height: 520px;
+  overflow: hidden;
+  font-family: var(--font-family);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* ─── Material Symbols Icon Configuration ─── */
+
+.material-symbols-rounded {
+  font-family: 'Material Symbols Rounded';
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+  font-size: 20px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── Scrollbar ─── */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bg-hover);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* ─── Selection ─── */
+
+::selection {
+  background-color: rgba(137, 180, 250, 0.25);
+  color: var(--text-primary);
+}

@@ -1,0 +1,160 @@
+.editor-wrapper {
+    flex: 1;
+    overflow-y: auto;
+    background-color: var(--bg-primary);
+    position: relative;
+    transition: background-color 0.25s ease;
+}
+
+.editor-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: var(--text-muted);
+    font-size: 13px;
+}
+
+/* ─── Milkdown theme overrides ─── */
+
+.editor-wrapper .milkdown {
+    background: transparent !important;
+    color: var(--text-primary) !important;
+    box-shadow: none !important;
+    border: none !important;
+    font-family: var(--font-family) !important;
+    padding: 16px !important;
+    min-height: 100%;
+    font-size: 14px !important;
+    line-height: 1.7 !important;
+}
+
+.editor-wrapper .milkdown .editor {
+    padding: 0 !important;
+    outline: none !important;
+}
+
+/* Headings */
+.editor-wrapper .milkdown h1 {
+    font-size: 1.5em;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0.6em 0 0.3em;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.2em;
+}
+
+.editor-wrapper .milkdown h2 {
+    font-size: 1.25em;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0.5em 0 0.25em;
+}
+
+.editor-wrapper .milkdown h3 {
+    font-size: 1.1em;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin: 0.4em 0 0.2em;
+}
+
+/* Paragraphs */
+.editor-wrapper .milkdown p {
+    margin: 0.3em 0;
+    color: var(--text-primary);
+}
+
+/* Links */
+.editor-wrapper .milkdown a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+.editor-wrapper .milkdown a:hover {
+    text-decoration: underline;
+}
+
+/* Code */
+.editor-wrapper .milkdown code {
+    background-color: var(--bg-surface);
+    color: var(--accent);
+    padding: 1px 5px;
+    border-radius: var(--radius-sm);
+    font-size: 0.9em;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+.editor-wrapper .milkdown pre {
+    background-color: var(--bg-surface) !important;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 12px !important;
+    margin: 0.5em 0;
+    overflow-x: auto;
+}
+
+.editor-wrapper .milkdown pre code {
+    background: transparent;
+    padding: 0;
+    color: var(--text-primary);
+}
+
+/* Blockquote */
+.editor-wrapper .milkdown blockquote {
+    border-left: 3px solid var(--accent);
+    padding-left: 12px;
+    margin: 0.5em 0;
+    color: var(--text-secondary);
+}
+
+/* Lists */
+.editor-wrapper .milkdown ul,
+.editor-wrapper .milkdown ol {
+    padding-left: 20px;
+    margin: 0.3em 0;
+}
+
+.editor-wrapper .milkdown li {
+    margin: 0.15em 0;
+}
+
+.editor-wrapper .milkdown li::marker {
+    color: var(--text-muted);
+}
+
+/* Horizontal rule */
+.editor-wrapper .milkdown hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 1em 0;
+}
+
+/* Task list */
+.editor-wrapper .milkdown li[data-checked] {
+    list-style: none;
+}
+
+/* Strong & emphasis */
+.editor-wrapper .milkdown strong {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.editor-wrapper .milkdown em {
+    color: var(--text-secondary);
+}
+
+/* Placeholder — React-controlled overlay */
+.editor-placeholder {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    right: 16px;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text-muted);
+    font-style: italic;
+    pointer-events: none;
+    user-select: none;
+    z-index: 1;
+}

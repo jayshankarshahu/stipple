@@ -1,0 +1,171 @@
+.timeline-view {
+    padding: 16px 0 32px;
+    position: relative;
+    max-width: 720px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.timeline-view__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 24px;
+    color: var(--text-muted);
+    gap: 14px;
+}
+
+.timeline-view__empty-icon {
+    font-size: 48px !important;
+    opacity: 0.35;
+    color: var(--accent);
+}
+
+.timeline-view__empty-text {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.timeline-view__empty-hint {
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+/* ─── Timeline item ─── */
+
+.timeline-item {
+    display: flex;
+    gap: 0;
+    padding: 0 32px;
+    position: relative;
+    animation: timeline-item-in 0.4s ease forwards;
+    opacity: 0;
+    transform: translateY(10px);
+}
+
+@keyframes timeline-item-in {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ─── Left column: vertical rail drawn as ::before, dot sits on it ─── */
+
+.timeline-item__marker {
+    /* Fixed column width that exactly centers the rail under the dot */
+    width: 28px;
+    flex-shrink: 0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* The continuous vertical rail line */
+.timeline-item__marker::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    background-color: var(--border);
+}
+
+/* Last item fades the rail */
+.timeline-item:last-child .timeline-item__marker::before {
+    background: linear-gradient(to bottom, var(--border) 50%, transparent);
+}
+
+.timeline-item__dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--accent);
+    /* Ring border matches background so it looks like a ring punch-through the rail */
+    border: 2px solid var(--bg-primary);
+    box-shadow: 0 0 0 2px var(--accent);
+    flex-shrink: 0;
+    position: relative;
+    z-index: 2;
+    margin-top: 22px;
+    transition: transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+.timeline-item:hover .timeline-item__dot {
+    transform: scale(1.25);
+    box-shadow: 0 0 0 3px var(--accent), 0 0 14px var(--accent-glow);
+}
+
+.timeline-item__dot--empty {
+    width: 8px;
+    height: 8px;
+    background-color: var(--bg-surface);
+    border-color: var(--bg-primary);
+    box-shadow: 0 0 0 2px var(--border);
+    margin-top: 20px;
+}
+
+.timeline-item:hover .timeline-item__dot--empty {
+    transform: scale(1.1);
+    box-shadow: 0 0 0 2px var(--text-muted);
+}
+
+/* ─── Right side: card ─── */
+
+.timeline-item__content {
+    flex: 1;
+    padding: 8px 0 20px 16px;
+    min-width: 0;
+}
+
+/* Gap items have less vertical weight */
+.timeline-item--gap .timeline-item__content {
+    padding-bottom: 8px;
+}
+
+/* ─── Compact gap row (N days, no notes) ─── */
+
+.timeline-gap {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px 5px 8px;
+    background-color: transparent;
+    border: 1px dashed var(--border);
+    border-radius: 20px;
+    margin-top: 14px;
+}
+
+.timeline-gap__icon {
+    font-size: 16px !important;
+    color: var(--text-muted);
+    opacity: 0.6;
+}
+
+.timeline-gap__label {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+
+.timeline-gap__range {
+    font-size: 11px;
+    color: var(--text-muted);
+    opacity: 0.6;
+    white-space: nowrap;
+}
+
+/* Dashed dot marker for gap rows */
+.timeline-item--gap .timeline-item__dot--empty {
+    box-shadow: none;
+    border: 2px dashed var(--border);
+    background: transparent;
+    opacity: 0.5;
+}
