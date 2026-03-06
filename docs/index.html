@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stipple | Your Timeline, Perfected</title>
+    <meta name="description"
+        content="Minimalist daily journaling with markdown support, tagging, and a chronological timeline perfectly designed for Chrome.">
+    <!-- Open Graph tags for rich social sharing -->
+    <meta property="og:title" content="Stipple | Your Timeline, Perfected">
+    <meta property="og:description"
+        content="A distraction-free daily ledger designed for those who need a persistent, organized space for their thoughts.">
+    <meta property="og:type" content="website">
+
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+</head>
+
+<body>
+    <!-- Decorative background elements -->
+    <div class="glow-blob blob-primary"></div>
+    <div class="glow-blob blob-secondary"></div>
+
+    <header class="navbar">
+        <div class="container nav-container">
+            <div class="logo">
+                <span class="material-symbols-rounded logo-icon">history_edu</span>
+                <span class="logo-text">Stipple</span>
+            </div>
+            <nav class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#preview">Preview</a>
+                <a href="#" class="btn btn-primary">Add to Chrome</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero container">
+            <div class="hero-content">
+                <div class="badge">Now available for Chrome ✨</div>
+                <h1 class="hero-title">Your Daily Ledger,<br><span>Perfected.</span></h1>
+                <p class="hero-description">
+                    Stipple is a distraction-free journal designed for developers, writers, and thinkers. A persistent,
+                    organized space for your thoughts without the bloat.
+                </p>
+                <div class="hero-cta">
+                    <button class="btn btn-primary btn-large">
+                        <span class="material-symbols-rounded">extension</span>
+                        Add to Chrome - It's Free
+                    </button>
+                    <button class="btn btn-secondary btn-large">
+                        View Demo
+                    </button>
+                </div>
+            </div>
+            <div class="hero-image-wrapper">
+                <img src="assets/screenshots/1_daily_editor_perfect_1772827003233.png" alt="Stipple Daily Editor"
+                    class="hero-image main-screenshot">
+            </div>
+        </section>
+
+        <!-- Features Grid -->
+        <section id="features" class="features-section container">
+            <div class="section-heading text-center">
+                <h2>Everything you need. Nothing you don't.</h2>
+                <p>Designed for maximum velocity and minimum friction.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><span class="material-symbols-rounded">markdown</span></div>
+                    <h3>Native Markdown</h3>
+                    <p>Format your notes effortlessly as you type. Support for lists, headings, code blocks, and more.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><span class="material-symbols-rounded">sell</span></div>
+                    <h3>Powerful Tagging</h3>
+                    <p>Categorize your thoughts with a flexible tag system to track recurring themes or projects
+                        effortlessly.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><span class="material-symbols-rounded">history</span></div>
+                    <h3>Smart Timeline</h3>
+                    <p>A beautiful chronological history of your notes that intelligently collapses inactive periods.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><span class="material-symbols-rounded">lock</span></div>
+                    <h3>Local-First Privacy</h3>
+                    <p>Your data never leaves your machine. Everything is securely stored locally in your browser.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Showcase Alternating Rows -->
+        <section id="preview" class="showcase-section">
+            <div class="container">
+                <!-- Row 1: Timeline -->
+                <div class="showcase-row">
+                    <div class="showcase-content">
+                        <h2>A chronological view of your progress.</h2>
+                        <p>The timeline view stitches together your daily notes into a unified, scrollable history. See
+                            exactly what you worked on last week, last month, or last year, with empty days collapsed to
+                            keep things tight.</p>
+                        <ul class="feature-list">
+                            <li><span class="material-symbols-rounded">check_circle</span> Infinite scrolling history
+                            </li>
+                            <li><span class="material-symbols-rounded">check_circle</span> Smart gap collapsing</li>
+                            <li><span class="material-symbols-rounded">check_circle</span> Read-only context view</li>
+                        </ul>
+                    </div>
+                    <div class="showcase-image glass-panel">
+                        <img src="assets/screenshots/2_timeline_1772827382824.png" alt="Timeline History View">
+                    </div>
+                </div>
+
+                <!-- Row 2: Search/Filter -->
+                <div class="showcase-row reverse">
+                    <div class="showcase-content">
+                        <h2>Find anything, instantly.</h2>
+                        <p>With deep client-side search, finding that one note about "design" from three months ago is
+                            instantaneous. Filter by exact dates, search queries, or combination of tags.</p>
+                        <div class="showcase-image-mini glass-panel">
+                            <img src="assets/screenshots/4_tags_png_1772827791971.png" alt="Tagging System">
+                        </div>
+                    </div>
+                    <div class="showcase-image glass-panel">
+                        <img src="assets/screenshots/3_search_1772827686014.png" alt="Live Search and Filtering">
+                    </div>
+                </div>
+
+                <!-- Row 3: Light Mode -->
+                <div class="showcase-row">
+                    <div class="showcase-content">
+                        <h2>Beautiful in every light.</h2>
+                        <p>Whether you're a creature of the night or prefer a brightly lit workspace, Stipple has you
+                            covered with expertly crafted Dark and Light modes.</p>
+                    </div>
+                    <div class="showcase-image glass-panel light-mode-showcase">
+                        <img src="assets/screenshots/5_light_mode_1772827931503.png" alt="Stipple Light Theme">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom CTA -->
+        <section class="bottom-cta container text-center">
+            <h2>Ready to streamline your notes?</h2>
+            <p>Join thousands of users organizing their thoughts locally.</p>
+            <button class="btn btn-primary btn-large cta-pulse">
+                Add to Chrome Now
+            </button>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container footer-container">
+            <div class="footer-brand">
+                <span class="material-symbols-rounded logo-icon">history_edu</span>
+                <span class="logo-text">Stipple</span>
+                <p>&copy; 2026 Stipple Extension. All rights reserved.</p>
+            </div>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Contact Support</a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
