@@ -68,7 +68,7 @@
 
 .tags-panel__chip-remove:hover {
     color: var(--danger);
-    background-color: rgba(248, 113, 113, 0.12);
+    background-color: rgba(190, 82, 75, 0.2);
 }
 
 .tags-panel__chip-remove .material-symbols-rounded {

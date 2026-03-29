@@ -12,9 +12,9 @@
 }
 
 .note-card:hover {
-    border-color: rgba(137, 180, 250, 0.3);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .note-card--expanded {
@@ -260,7 +260,7 @@
 /* ─── Search highlight ─── */
 
 .note-card__highlight {
-    background-color: rgba(137, 180, 250, 0.2);
+    background-color: rgba(68, 122, 203, 0.2);
     color: var(--accent);
     border-radius: 2px;
     padding: 0 1px;

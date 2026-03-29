@@ -1,10 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Editor as MilkdownEditor, rootCtx, defaultValueCtx } from '@milkdown/kit/core';
 import { commonmark } from '@milkdown/kit/preset/commonmark';
 import { history } from '@milkdown/kit/plugin/history';
 import { listener, listenerCtx } from '@milkdown/kit/plugin/listener';
 import { replaceAll } from '@milkdown/kit/utils';
 import { nord } from '@milkdown/theme-nord';
+import { Milkdown, MilkdownProvider, useEditor, useInstance } from '@milkdown/react';
+import { useSlash } from '../slash';
+import { ProsemirrorAdapterProvider } from '@prosemirror-adapter/react';
 import '@milkdown/theme-nord/style.css';
 import './Editor.css';
 
@@ -14,68 +17,55 @@ interface EditorProps {
     onContentChange: (markdown: string) => void;
 }
 
-export const Editor: React.FC<EditorProps> = ({
+interface EditorCoreProps {
+    initialContent: string;
+    onContentChange: (markdown: string) => void;
+    onIsEmptyChange: (isEmpty: boolean) => void;
+}
+
+/**
+ * EditorCore must live inside MilkdownProvider + ProsemirrorAdapterProvider.
+ * It calls useEditor() to mount the Milkdown instance and useInstance() to
+ * access the editor for the paste handler.
+ *
+ * Callbacks are stabilised via refs so the markdownUpdated listener never
+ * captures a stale closure.
+ */
+const EditorCore: React.FC<EditorCoreProps> = ({
     initialContent,
-    noteId,
     onContentChange,
+    onIsEmptyChange,
 }) => {
-    const editorRef = useRef<HTMLDivElement>(null);
-    const editorInstanceRef = useRef<MilkdownEditor | null>(null);
-    const onContentChangeRef = useRef(onContentChange);
     const currentMarkdownRef = useRef(initialContent || '');
-    const [isEmpty, setIsEmpty] = useState(!initialContent?.trim());
+    const onContentChangeRef = useRef(onContentChange);
+    const onIsEmptyChangeRef = useRef(onIsEmptyChange);
 
-    useEffect(() => {
-        onContentChangeRef.current = onContentChange;
-    }, [onContentChange]);
+    // Always keep refs pointing at latest props — avoids stale closure in listener
+    onContentChangeRef.current = onContentChange;
+    onIsEmptyChangeRef.current = onIsEmptyChange;
 
-    useEffect(() => {
-        if (!editorRef.current) return;
+    const [loading, getEditor] = useInstance();
+    const slash = useSlash();
 
-        if (editorInstanceRef.current) {
-            editorInstanceRef.current.destroy();
-            editorInstanceRef.current = null;
-        }
-
-        editorRef.current.innerHTML = '';
-        currentMarkdownRef.current = initialContent || '';
-        setIsEmpty(!initialContent?.trim());
-
-        const createEditor = async () => {
-            try {
-                const editor = await MilkdownEditor.make()
-                    .config(nord)
-                    .config((ctx) => {
-                        ctx.set(rootCtx, editorRef.current!);
-                        ctx.set(defaultValueCtx, initialContent || '');
-                        ctx.get(listenerCtx).markdownUpdated((_ctx, markdown) => {
-                            currentMarkdownRef.current = markdown;
-                            const empty = !markdown?.trim();
-                            setIsEmpty(empty);
-                            onContentChangeRef.current(markdown);
-                        });
-                    })
-                    .use(commonmark)
-                    .use(history)
-                    .use(listener)
-                    .create();
-
-                editorInstanceRef.current = editor;
-            } catch (err) {
-                console.error('Failed to create Milkdown editor:', err);
-            }
-        };
-
-        createEditor();
-
-        return () => {
-            if (editorInstanceRef.current) {
-                editorInstanceRef.current.destroy();
-                editorInstanceRef.current = null;
-            }
-        };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [noteId]);
+    useEditor((root) =>
+        MilkdownEditor.make()
+            .config(nord)
+            .config((ctx) => {
+                ctx.set(rootCtx, root);
+                ctx.set(defaultValueCtx, initialContent || '');
+                ctx.get(listenerCtx).markdownUpdated((_ctx, markdown) => {
+                    currentMarkdownRef.current = markdown;
+                    const empty = !markdown?.trim();
+                    onIsEmptyChangeRef.current(empty);
+                    onContentChangeRef.current(markdown);
+                })
+            })
+            .config(slash.config)
+            .use(commonmark)
+            .use(history)
+            .use(listener)
+            .use(slash.plugin)
+    );
 
     /**
      * Intercept paste events. When the clipboard contains plain text without HTML
@@ -97,7 +87,8 @@ export const Editor: React.FC<EditorProps> = ({
         e.preventDefault();
         e.stopPropagation();
 
-        const editor = editorInstanceRef.current;
+        if (loading) return;
+        const editor = getEditor();
         if (!editor) return;
 
         // Append pasted text to whatever the editor currently contains
@@ -109,13 +100,42 @@ export const Editor: React.FC<EditorProps> = ({
     };
 
     return (
-        <div className="editor-wrapper" onPaste={handlePaste}>
+        <div onPaste={handlePaste}>
+            <Milkdown />
+        </div>
+    );
+};
+
+/**
+ * Public Editor component. Owns the isEmpty state (for the placeholder) and
+ * provides the MilkdownProvider + ProsemirrorAdapterProvider context required
+ * by useEditor, useInstance, and — later — usePluginViewFactory (slash plugin).
+ *
+ * Remounting on noteId change is handled upstream: App.tsx passes key={currentNoteId}
+ * on this component, so the entire provider tree is torn down and rebuilt fresh.
+ */
+export const Editor: React.FC<EditorProps> = ({
+    initialContent,
+    onContentChange,
+}) => {
+    const [isEmpty, setIsEmpty] = useState(!initialContent?.trim());
+
+    return (
+        <div className="editor-wrapper">
             {isEmpty && (
                 <div className="editor-placeholder" aria-hidden="true">
                     Start writing your notes…
                 </div>
             )}
-            <div ref={editorRef} />
+            <MilkdownProvider>
+                <ProsemirrorAdapterProvider>
+                    <EditorCore
+                        initialContent={initialContent}
+                        onContentChange={onContentChange}
+                        onIsEmptyChange={setIsEmpty}
+                    />
+                </ProsemirrorAdapterProvider>
+            </MilkdownProvider>
         </div>
     );
 };
