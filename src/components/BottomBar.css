@@ -39,7 +39,7 @@
 .bottom-bar__action:hover {
     color: var(--text-primary);
     background-color: var(--bg-hover);
-    border-color: rgba(137, 180, 250, 0.2);
+    border-color: rgba(68, 122, 203, 0.25);
 }
 
 .bottom-bar__action:active {

@@ -1,11 +1,11 @@
 {
     "manifest_version": 3,
-    "name": "Notes",
-    "description": "A minimal daily note-taking extension with markdown support",
-    "version": "1.0.0",
+    "name": "Stipple",
+    "description": "A Notion-inspired dark mode note-taking extension with markdown, tags, and timeline view.",
+    "version": "1.1.0",
     "action": {
         "default_popup": "index.html",
-        "default_title": "Notes"
+        "default_title": "Stipple"
     },
     "permissions": [
         "storage"
