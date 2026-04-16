@@ -158,3 +158,52 @@
     user-select: none;
     z-index: 1;
 }
+
+/* ─── Slash Menu ─── */
+
+.slash-menu {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    padding: 8px 0;
+    min-width: 200px;
+    max-height: 250px;
+    overflow-y: auto;
+    position: absolute;
+    z-index: 100;
+}
+
+.slash-menu[data-show="false"] {
+    display: none;
+}
+
+.slash-menu-empty {
+    padding: 8px 16px;
+    color: var(--text-muted);
+    font-size: 13px;
+    font-style: italic;
+}
+
+.slash-menu-item {
+    padding: 6px 16px;
+    cursor: pointer;
+    transition: background-color var(--transition-fast);
+}
+
+.slash-menu-item:hover,
+.slash-menu-item.selected {
+    background-color: var(--bg-hover);
+}
+
+.slash-menu-title {
+    color: var(--text-primary);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.slash-menu-desc {
+    color: var(--text-muted);
+    font-size: 12px;
+    margin-top: 2px;
+}

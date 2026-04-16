@@ -1,0 +1,12 @@
+{
+    "heading": {
+        "name": "Insert Heading",
+        "description": "Adds a heading block",
+        "class": "insert_heading_command"
+    },
+    "date": {
+        "name": "Insert Date",
+        "description": "Adds current date",
+        "class": "insert_date_command"
+    }
+}

@@ -5,6 +5,7 @@ import { history } from '@milkdown/kit/plugin/history';
 import { listener, listenerCtx } from '@milkdown/kit/plugin/listener';
 import { replaceAll } from '@milkdown/kit/utils';
 import { nord } from '@milkdown/theme-nord';
+import { slash, configureSlashPlugin } from '../commands/slash_plugin';
 import '@milkdown/theme-nord/style.css';
 import './Editor.css';
 
@@ -45,6 +46,7 @@ export const Editor: React.FC<EditorProps> = ({
             try {
                 const editor = await MilkdownEditor.make()
                     .config(nord)
+                    .config(configureSlashPlugin())
                     .config((ctx) => {
                         ctx.set(rootCtx, editorRef.current!);
                         ctx.set(defaultValueCtx, initialContent || '');
@@ -58,6 +60,7 @@ export const Editor: React.FC<EditorProps> = ({
                     .use(commonmark)
                     .use(history)
                     .use(listener)
+                    .use(slash as any)
                     .create();
 
                 editorInstanceRef.current = editor;
