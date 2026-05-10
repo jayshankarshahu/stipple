@@ -9,7 +9,8 @@ export class ByeCommand implements ISlashCommand {
   readonly description = 'Close the editor'
 
   async execute(_ctx: Ctx): Promise<void> {
-    await saveStateManager.waitForSaved()
-    window.close()
+
+    await saveStateManager.waitForSaved();
+    setTimeout(window.close, 1000);    
   }
 }

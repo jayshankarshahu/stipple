@@ -79,6 +79,8 @@ const App: React.FC = () => {
                 )}
 
                 <BottomBar
+                    goToDate={goToDate}
+                    currentNote={currentNote}
                     tagCount={currentNote.tags.length}
                     isTagsOpen={isTagsOpen}
                     onToggleTags={() => setIsTagsOpen((v) => !v)}

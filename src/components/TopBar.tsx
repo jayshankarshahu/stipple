@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { formatDateLabel, getTodayString } from '../services/DateService';
+import { formatDateLabel } from '../services/DateService';
 import './TopBar.css';
 
 interface TopBarProps {
@@ -31,8 +31,6 @@ export const TopBar: React.FC<TopBarProps> = ({
             onJumpToDate(e.target.value);
         }
     };
-
-    const today = getTodayString();
 
     return (
         <div className="top-bar">
@@ -66,17 +64,7 @@ export const TopBar: React.FC<TopBarProps> = ({
                     aria-label="Jump to date"
                 />
 
-                {date !== today && (
-                    <button
-                        type="button"
-                        className="top-bar__today"
-                        onClick={() => onJumpToDate(today)}
-                        title="Today's note"
-                        aria-label="Today's note"
-                    >
-                        <span className="material-symbols-rounded">today</span>
-                    </button>
-                )}
+                
             </div>
 
             <div

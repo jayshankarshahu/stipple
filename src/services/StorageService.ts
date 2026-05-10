@@ -29,16 +29,15 @@ async function storageSet(items: Record<string, unknown>): Promise<void> {
     try {
         const storage = getStorage();
         if (!storage) throw new Error('Chrome storage not available');
-        return new Promise((resolve, reject) => {
-            storage.set(items, () => {
-                if (chrome.runtime.lastError) {
-                    saveStateManager.setState('error');
-                    reject(new Error(chrome.runtime.lastError.message));
-                } else {
-                    saveStateManager.setState('saved');
-                    resolve();
-                }
-            });
+        return new Promise(async (resolve, reject) => {
+            await storage.set(items); 
+            if (chrome.runtime.lastError) {
+                saveStateManager.setState('error');
+                reject(new Error(chrome.runtime.lastError.message));
+            } else {
+                saveStateManager.setState('saved');
+                resolve();
+            }
         });
     } catch (err) {
         saveStateManager.setState('error');
