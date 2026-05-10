@@ -1,6 +1,5 @@
 import type { ISlashCommand } from './commands/ISlashCommand'
 import { HeadingCommand } from './commands/HeadingCommand'
-import { ImageCommand } from './commands/ImageCommand'
 import { DividerCommand } from './commands/DividerCommand'
 import { BulletListCommand } from './commands/BulletListCommand'
 import { OrderedListCommand } from './commands/OrderedListCommand'
@@ -16,5 +15,4 @@ export const SLASH_COMMANDS: ISlashCommand[] = [
   new QuoteCommand(),
   new CodeBlockCommand(),
   new DividerCommand(),
-  new ImageCommand(),
 ]

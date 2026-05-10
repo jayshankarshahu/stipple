@@ -86,8 +86,8 @@
 
 html,
 body {
-  width: 400px;
-  height: 520px;
+  width: max(400px , 100%);
+  height: max(520px, 100vh);
   overflow: hidden;
   font-family: var(--font-family);
   font-size: 14px;

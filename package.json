@@ -1,20 +1,21 @@
 {
   "name": "stipple",
   "private": true,
-  "version": "1.0.0",
+  "version": "2.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build --watch",
     "preview": "vite preview"
   },
   "dependencies": {
     "@floating-ui/dom": "^1.7.6",
-    "@milkdown/kit": "^7.6.2",
-    "@milkdown/plugin-listener": "^7.6.2",
+    "@milkdown/components": "^7.20.0",
+    "@milkdown/kit": "^7.20.0",
+    "@milkdown/plugin-listener": "^7.20.0",
     "@milkdown/plugin-slash": "^7.20.0",
-    "@milkdown/react": "^7.6.2",
-    "@milkdown/theme-nord": "^7.6.2",
+    "@milkdown/react": "^7.20.0",
+    "@milkdown/theme-nord": "^7.20.0",
     "@prosemirror-adapter/react": "^0.5.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

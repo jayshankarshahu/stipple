@@ -9,7 +9,13 @@ export default defineConfig({
             input: {
                 popup: 'index.html',
                 timeline: 'timeline.html',
+                'service-worker': 'src/service-worker.ts'
             },
+            output: {
+                entryFileNames: (assetInfo) => {
+                    return assetInfo.name === 'service-worker' ? '[name].js' : 'assets/[name]-[hash].js'
+                }
+            }
         },
     },
 })

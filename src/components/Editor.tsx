@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Editor as MilkdownEditor, rootCtx, defaultValueCtx } from '@milkdown/kit/core';
 import { commonmark } from '@milkdown/kit/preset/commonmark';
 import { history } from '@milkdown/kit/plugin/history';
@@ -47,6 +47,20 @@ const EditorCore: React.FC<EditorCoreProps> = ({
     const [loading, getEditor] = useInstance();
     const slash = useSlash();
 
+    // Upload event listener — decoupled from the node view.
+    // Replace the stub inside with your real upload API when ready.
+    useEffect(() => {
+        const handler = (e: Event) => {
+            const { file, resolve } = (e as CustomEvent).detail
+            // Stub: create a local object URL to keep the flow testable end-to-end
+            const localUrl = URL.createObjectURL(file)
+            setTimeout(() => resolve(localUrl), 1000)
+            // Real API: uploadToServer(file).then(url => resolve(url))
+        }
+        document.addEventListener('stipple:image-upload', handler)
+        return () => document.removeEventListener('stipple:image-upload', handler)
+    }, [])
+
     useEditor((root) =>
         MilkdownEditor.make()
             .config(nord)
@@ -59,6 +73,7 @@ const EditorCore: React.FC<EditorCoreProps> = ({
                     onIsEmptyChangeRef.current(empty);
                     onContentChangeRef.current(markdown);
                 })
+                
             })
             .config(slash.config)
             .use(commonmark)
