@@ -4,8 +4,8 @@ import * as StorageService from '../services/StorageService';
 import { SearchBar } from './components/SearchBar';
 import { TagFilter } from './components/TagFilter';
 import { TimelineView, TimelineEntry } from './components/TimelineView';
-import { ThemeToggle } from '../components/ThemeToggle';
 import './TimelineApp.css';
+import { getStoredTheme } from '../settings/SettingsApp';
 
 interface LoadedNote {
     entry: NoteIndexEntry;
@@ -71,6 +71,17 @@ export const TimelineApp: React.FC = () => {
                 setIsLoading(false);
             }
         };
+
+        const loadTheme = async () => {
+            try {
+                const theme = await getStoredTheme();
+                document.documentElement.setAttribute('data-theme', theme);
+            } catch (error) {
+                console.error('Failed to load theme:', error);
+            }
+        };
+
+        loadTheme();
         load();
     }, []);
 
@@ -198,6 +209,13 @@ export const TimelineApp: React.FC = () => {
         [notes]
     );
 
+    const openSettings = () => {
+        const url = typeof chrome !== 'undefined' && chrome.runtime
+            ? chrome.runtime.getURL('settings.html')
+            : '/settings.html';
+        window.open(url, '_blank');
+    };
+
     return (
         <div className="timeline-app">
             <div className="timeline-app__header">
@@ -205,7 +223,14 @@ export const TimelineApp: React.FC = () => {
                     <span className="material-symbols-rounded timeline-app__title-icon">history</span>
                     Notes Timeline
                 </h1>
-                <ThemeToggle />
+                <button
+                    className="timeline-app__settings-button"
+                    onClick={openSettings}
+                    title="Settings"
+                    aria-label="Settings"
+                >
+                    <span className="material-symbols-rounded">settings</span>
+                </button>
             </div>
 
             <SearchBar

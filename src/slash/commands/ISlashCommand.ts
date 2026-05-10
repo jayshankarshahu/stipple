@@ -5,5 +5,5 @@ export interface ISlashCommand {
   readonly label: string
   readonly icon: string
   readonly description: string
-  execute(ctx: Ctx): void
+  execute(ctx: Ctx): void | Promise<void>
 }

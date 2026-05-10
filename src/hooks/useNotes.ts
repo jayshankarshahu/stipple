@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import type { NoteObject, NoteIndex } from '../types';
 import * as NoteService from '../services/NoteService';
 import * as StorageService from '../services/StorageService';
+import { saveStateManager } from '../state';
 
 interface UseNotesReturn {
     currentNote: NoteObject | null;
@@ -34,11 +35,16 @@ export function useNotes(): UseNotesReturn {
     useEffect(() => {
         const init = async () => {
             try {
-                const result = await NoteService.getOrCreateTodayNote();
+                const lastOpenedDate = await StorageService.getLastOpenedDate();
+                const result = lastOpenedDate
+                    ? await NoteService.getOrCreateDateNote(lastOpenedDate)
+                    : await NoteService.getOrCreateTodayNote();
+
                 setCurrentNote(result.note);
                 setCurrentNoteId(result.noteId);
                 setCurrentIndex(result.currentIndex);
                 setSortedIndex(result.sortedIndex);
+                await StorageService.setLastOpenedDate(result.note.date);
 
                 // Collect all unique tags across all notes
                 const tagSet = new Set<string>();
@@ -65,18 +71,19 @@ export function useNotes(): UseNotesReturn {
             setCurrentNote(result.note);
             setCurrentNoteId(result.noteId);
             setCurrentIndex(index);
+            await StorageService.setLastOpenedDate(result.note.date);
         }
     }, []);
 
-    const goToPrev = useCallback(() => {
+    const goToPrev = useCallback(async () => {
         if (currentIndex > 0) {
-            navigateTo(currentIndex - 1);
+            await navigateTo(currentIndex - 1);
         }
     }, [currentIndex, navigateTo]);
 
-    const goToNext = useCallback(() => {
+    const goToNext = useCallback(async () => {
         if (currentIndex < sortedIndex.length - 1) {
-            navigateTo(currentIndex + 1);
+            await navigateTo(currentIndex + 1);
         }
     }, [currentIndex, sortedIndex.length, navigateTo]);
 
@@ -87,6 +94,7 @@ export function useNotes(): UseNotesReturn {
         setCurrentNoteId(result.noteId);
         setCurrentIndex(result.currentIndex);
         setSortedIndex(result.sortedIndex);
+        await StorageService.setLastOpenedDate(result.note.date);
     }, []);
 
     // Debounced save
@@ -103,8 +111,17 @@ export function useNotes(): UseNotesReturn {
                 clearTimeout(debounceTimer.current);
             }
 
+            // Mark as saving when the debounce timer starts
+            saveStateManager.setState('saving');
+
             debounceTimer.current = setTimeout(async () => {
-                await NoteService.saveNoteContent(currentNoteId, markdown);
+                try {
+                    await NoteService.saveNoteContent(currentNoteId, markdown);
+                    saveStateManager.setState('saved');
+                } catch (error) {
+                    console.error('Failed to save note:', error);
+                    saveStateManager.setState('error');
+                }
             }, DEBOUNCE_MS);
         },
         [currentNoteId]
@@ -114,13 +131,20 @@ export function useNotes(): UseNotesReturn {
     const addTag = useCallback(
         async (tag: string) => {
             if (!currentNoteId) return;
-            const updated = await NoteService.addTag(currentNoteId, tag);
-            if (updated) {
-                setCurrentNote(updated);
-                // Update allTags if this is a new tag
-                setAllTags((prev) =>
-                    prev.includes(tag) ? prev : [...prev, tag].sort()
-                );
+            saveStateManager.setState('saving');
+            try {
+                const updated = await NoteService.addTag(currentNoteId, tag);
+                if (updated) {
+                    setCurrentNote(updated);
+                    // Update allTags if this is a new tag
+                    setAllTags((prev) =>
+                        prev.includes(tag) ? prev : [...prev, tag].sort()
+                    );
+                }
+                saveStateManager.setState('saved');
+            } catch (error) {
+                console.error('Failed to add tag:', error);
+                saveStateManager.setState('error');
             }
         },
         [currentNoteId]
@@ -129,8 +153,15 @@ export function useNotes(): UseNotesReturn {
     const removeTag = useCallback(
         async (tag: string) => {
             if (!currentNoteId) return;
-            const updated = await NoteService.removeTag(currentNoteId, tag);
-            if (updated) setCurrentNote(updated);
+            saveStateManager.setState('saving');
+            try {
+                const updated = await NoteService.removeTag(currentNoteId, tag);
+                if (updated) setCurrentNote(updated);
+                saveStateManager.setState('saved');
+            } catch (error) {
+                console.error('Failed to remove tag:', error);
+                saveStateManager.setState('error');
+            }
         },
         [currentNoteId]
     );

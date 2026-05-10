@@ -5,6 +5,7 @@ import { BulletListCommand } from './commands/BulletListCommand'
 import { OrderedListCommand } from './commands/OrderedListCommand'
 import { QuoteCommand } from './commands/QuoteCommand'
 import { CodeBlockCommand } from './commands/CodeBlockCommand'
+import { ByeCommand } from './commands/ByeCommand'
 
 export const SLASH_COMMANDS: ISlashCommand[] = [
   new HeadingCommand(1),
@@ -15,4 +16,5 @@ export const SLASH_COMMANDS: ISlashCommand[] = [
   new QuoteCommand(),
   new CodeBlockCommand(),
   new DividerCommand(),
+  new ByeCommand(),
 ]

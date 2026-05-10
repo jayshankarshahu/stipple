@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { formatDateLabel } from '../services/DateService';
+import { formatDateLabel, getTodayString } from '../services/DateService';
 import './TopBar.css';
 
 interface TopBarProps {
@@ -32,6 +32,8 @@ export const TopBar: React.FC<TopBarProps> = ({
         }
     };
 
+    const today = getTodayString();
+
     return (
         <div className="top-bar">
             <div
@@ -40,9 +42,10 @@ export const TopBar: React.FC<TopBarProps> = ({
                 role="button"
                 tabIndex={canGoPrev ? 0 : -1}
                 onKeyDown={(e) => e.key === 'Enter' && canGoPrev && onPrev()}
+                title="Previous Note"
+                aria-label="Previous Note"
             >
                 <span className="material-symbols-rounded top-bar__nav-icon">chevron_left</span>
-                <span>Prev</span>
             </div>
 
             <div className="top-bar__date-wrapper">
@@ -62,6 +65,18 @@ export const TopBar: React.FC<TopBarProps> = ({
                     onChange={handleDateChange}
                     aria-label="Jump to date"
                 />
+
+                {date !== today && (
+                    <button
+                        type="button"
+                        className="top-bar__today"
+                        onClick={() => onJumpToDate(today)}
+                        title="Today's note"
+                        aria-label="Today's note"
+                    >
+                        <span className="material-symbols-rounded">today</span>
+                    </button>
+                )}
             </div>
 
             <div
@@ -70,8 +85,9 @@ export const TopBar: React.FC<TopBarProps> = ({
                 role="button"
                 tabIndex={canGoNext ? 0 : -1}
                 onKeyDown={(e) => e.key === 'Enter' && canGoNext && onNext()}
+                title="Next Note"
+                aria-label="Next Note"
             >
-                <span>Next</span>
                 <span className="material-symbols-rounded top-bar__nav-icon">chevron_right</span>
             </div>
         </div>

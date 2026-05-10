@@ -161,7 +161,7 @@ export const SlashMenu = () => {
               onMouseEnter={() => setSelectedIndex(i)}
               onMouseDown={e => { e.preventDefault(); runCommand(i) }}
             >
-              <span className="slash-menu-icon">{cmd.icon}</span>
+              <span className="slash-menu-icon" dangerouslySetInnerHTML={{ __html: cmd.icon }}></span>
               <div className="slash-menu-text">
                 <span className="slash-menu-label">{cmd.label}</span>
                 <span className="slash-menu-desc">{cmd.description}</span>

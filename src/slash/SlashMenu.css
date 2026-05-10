@@ -27,7 +27,7 @@
   align-items: center;
   gap: 10px;
   padding: 7px 10px;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   cursor: pointer;
   user-select: none;
   transition: background var(--transition-fast);

@@ -1,4 +1,5 @@
 import type { NoteIndex, NoteObject } from '../types';
+import { saveStateManager } from '../state';
 
 const INDEX_KEY = 'date-noteId-index';
 
@@ -17,34 +18,32 @@ function getStorage(): typeof chrome.storage.local | null {
     return null;
 }
 
-// ─── Fallback: localStorage shim for dev mode ───
-
-function localGet(key: string): Promise<Record<string, unknown>> {
-    const raw = localStorage.getItem(key);
-    return Promise.resolve({ [key]: raw ? JSON.parse(raw) : undefined });
-}
-
-function localSet(items: Record<string, unknown>): Promise<void> {
-    for (const [k, v] of Object.entries(items)) {
-        localStorage.setItem(k, JSON.stringify(v));
-    }
-    return Promise.resolve();
-}
-
 async function storageGet(key: string): Promise<Record<string, unknown>> {
     const storage = getStorage();
-    if (storage) {
-        return new Promise((resolve) => storage.get([key], (result) => resolve(result as Record<string, unknown>)));
-    }
-    return localGet(key);
+    if (!storage) throw new Error('Chrome storage not available');
+    return new Promise((resolve) => storage.get([key], (result) => resolve(result as Record<string, unknown>)));
 }
 
 async function storageSet(items: Record<string, unknown>): Promise<void> {
-    const storage = getStorage();
-    if (storage) {
-        return new Promise((resolve) => storage.set(items, resolve));
+    saveStateManager.setState('saving');
+    try {
+        const storage = getStorage();
+        if (!storage) throw new Error('Chrome storage not available');
+        return new Promise((resolve, reject) => {
+            storage.set(items, () => {
+                if (chrome.runtime.lastError) {
+                    saveStateManager.setState('error');
+                    reject(new Error(chrome.runtime.lastError.message));
+                } else {
+                    saveStateManager.setState('saved');
+                    resolve();
+                }
+            });
+        });
+    } catch (err) {
+        saveStateManager.setState('error');
+        throw err;
     }
-    return localSet(items);
 }
 
 // ─── Index operations ───
@@ -72,6 +71,17 @@ export async function getNote(noteId: string): Promise<NoteObject | null> {
 
 export async function setNote(noteId: string, note: NoteObject): Promise<void> {
     await storageSet({ [noteId]: note });
+}
+
+const LAST_OPENED_DATE_KEY = 'last-opened-date';
+
+export async function getLastOpenedDate(): Promise<string | null> {
+    const result = await storageGet(LAST_OPENED_DATE_KEY);
+    return (result[LAST_OPENED_DATE_KEY] as string) || null;
+}
+
+export async function setLastOpenedDate(date: string): Promise<void> {
+    await storageSet({ [LAST_OPENED_DATE_KEY]: date });
 }
 
 // ─── Cache management ───

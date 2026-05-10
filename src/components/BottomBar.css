@@ -1,5 +1,6 @@
 .bottom-bar {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
     padding: 8px 12px;
@@ -14,7 +15,19 @@
 
 .bottom-bar__actions {
     display: flex;
+    flex-wrap: wrap;
     gap: 6px;
+}
+
+@media (max-width: 420px) {
+    .bottom-bar {
+        padding: 6px 8px;
+        gap: 6px;
+    }
+
+    .bottom-bar__action {
+        padding: 6px 10px;
+    }
 }
 
 .bottom-bar__action {

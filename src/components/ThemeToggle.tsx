@@ -1,21 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import './ThemeToggle.css';
 
-function getStoredTheme(): 'dark' | 'light' {
-    try {
-        return (localStorage.getItem('theme') as 'dark' | 'light') || 'dark';
-    } catch {
-        return 'dark';
+function getStorage(): typeof chrome.storage.local | null {
+    if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local) {
+        return chrome.storage.local;
     }
+    return null;
 }
 
-function applyTheme(theme: 'dark' | 'light'): void {
+function getStoredTheme(): Promise<'dark' | 'light'> {
+    const storage = getStorage();
+    if (!storage) throw new Error('Chrome storage not available');
+    return new Promise((resolve) => {
+        storage.get(['theme'], (result) => {
+            resolve((result.theme as 'dark' | 'light') || 'dark');
+        });
+    });
+}
+
+async function applyTheme(theme: 'dark' | 'light'): Promise<void> {
     document.documentElement.setAttribute('data-theme', theme);
-    try {
-        localStorage.setItem('theme', theme);
-    } catch {
-        // ignore storage errors in extension context
-    }
+    const storage = getStorage();
+    if (!storage) throw new Error('Chrome storage not available');
+    return new Promise((resolve, reject) => {
+        storage.set({ theme }, () => {
+            if (chrome.runtime.lastError) {
+                reject(new Error(chrome.runtime.lastError.message));
+            } else {
+                resolve();
+            }
+        });
+    });
 }
 
 export const ThemeToggle: React.FC = () => {
@@ -23,15 +38,26 @@ export const ThemeToggle: React.FC = () => {
 
     // Apply the stored theme on mount
     useEffect(() => {
-        const stored = getStoredTheme();
-        setTheme(stored);
-        applyTheme(stored);
+        const loadTheme = async () => {
+            try {
+                const stored = await getStoredTheme();
+                setTheme(stored);
+                await applyTheme(stored);
+            } catch (error) {
+                console.error('Failed to load theme:', error);
+            }
+        };
+        loadTheme();
     }, []);
 
-    const toggle = () => {
+    const toggle = async () => {
         const next = theme === 'dark' ? 'light' : 'dark';
         setTheme(next);
-        applyTheme(next);
+        try {
+            await applyTheme(next);
+        } catch (error) {
+            console.error('Failed to save theme:', error);
+        }
     };
 
     return (

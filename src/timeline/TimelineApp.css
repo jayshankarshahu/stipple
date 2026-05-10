@@ -1,9 +1,16 @@
 .timeline-app {
+    min-width: 320px;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     background-color: var(--bg-primary);
     transition: background-color 0.25s ease;
+}
+
+@media (max-width: 420px) {
+    .timeline-app__header {
+        padding: 16px 14px 10px;
+    }
 }
 
 .timeline-app__header {
@@ -26,6 +33,30 @@
 .timeline-app__title-icon {
     font-size: 22px !important;
     color: var(--accent);
+}
+
+.timeline-app__settings-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background-color: var(--bg-surface);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+}
+
+.timeline-app__settings-button:hover {
+    background-color: var(--bg-hover);
+    color: var(--text-primary);
+    border-color: rgba(68, 122, 203, 0.25);
+}
+
+.timeline-app__settings-button:active {
+    transform: scale(0.97);
 }
 
 .timeline-app__body {

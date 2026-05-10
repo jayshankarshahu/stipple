@@ -9,6 +9,7 @@ export default defineConfig({
             input: {
                 popup: 'index.html',
                 timeline: 'timeline.html',
+                settings: 'settings.html',
                 'service-worker': 'src/service-worker.ts'
             },
             output: {

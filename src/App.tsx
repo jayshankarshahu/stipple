@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNotes } from './hooks/useNotes';
+import { getStoredTheme } from './settings/SettingsApp';
 import { TopBar } from './components/TopBar';
 import { BottomBar } from './components/BottomBar';
 import { Editor } from './components/Editor';
@@ -23,6 +24,18 @@ const App: React.FC = () => {
     } = useNotes();
 
     const [isTagsOpen, setIsTagsOpen] = useState(false);
+
+    useEffect(() => {
+        const loadTheme = async () => {
+            try {
+                const theme = await getStoredTheme();
+                document.documentElement.setAttribute('data-theme', theme);
+            } catch (error) {
+                console.error('Failed to load theme:', error);
+            }
+        };
+        loadTheme();
+    }, []);
 
     if (isLoading || !currentNote || !currentNoteId) {
         return (
@@ -67,7 +80,6 @@ const App: React.FC = () => {
 
                 <BottomBar
                     tagCount={currentNote.tags.length}
-                    lastEdited={currentNote.lastEdited}
                     isTagsOpen={isTagsOpen}
                     onToggleTags={() => setIsTagsOpen((v) => !v)}
                 />
