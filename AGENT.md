@@ -5,6 +5,20 @@ This file provides context and architectural overview for AI agents working on t
 ## Project Overview
 **Stipple** is a Notion-inspired dark-mode note-taking Chrome extension. It operates mainly within the Chrome Side Panel API, offering daily markdown notes, tag management, and a timeline view. It has an integrated Next.js backend for handling external functionalities such as image uploads.
 
+## Exhaustive Features List
+- **Core Note-Taking & Editor**
+  - **Daily Notes**: Automatic daily note generation with chronological local storage indexing.
+  - **Rich Markdown Editing**: Powered by Milkdown/ProseMirror with real-time markdown parsing.
+  - **Slash Commands**: Notion-style `/` menu for seamlessly inserting Headings (H1, H2, H3), Bullet Lists, Ordered Lists, Quotes, Code Blocks, and Dividers.
+  - **Smart Pasting**: Intelligently intercepts raw markdown from the clipboard to force re-parsing while preserving rich-text HTML clipboard pasting.
+- **Organization, Timeline & Search**
+  - **Tagging System**: Add, remove, and manage metadata tags for each daily note via a dedicated tags panel/modal.
+  - **Timeline View**: A standalone dashboard (`timeline.html`) showing past notes in reverse chronological order, including visual "gap-filling" for days without notes.
+  - **Advanced Filtering**: Filter timeline notes by full-text search (querying both markdown content and tags), specific Date Ranges (From/To), and individual Tags.
+- **Customization & Extension Settings**
+  - **Theming**: Toggleable Light and Dark modes (built with Nord theme inspiration) that persist via Chrome Storage.
+  - **Extension Mode Toggle**: Users can configure the extension to launch as either a persistent Chrome Side Panel or a classic Popup window, controllable via a dedicated Settings page (`settings.html`).
+
 ## Technology Stack
 
 ### Frontend (Chrome Extension)

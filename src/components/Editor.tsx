@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Editor as MilkdownEditor, rootCtx, defaultValueCtx } from '@milkdown/kit/core';
+import { Editor as MilkdownEditor, editorViewCtx, rootCtx, defaultValueCtx } from '@milkdown/kit/core';
+import { TextSelection } from '@milkdown/kit/prose/state';
 import { commonmark } from '@milkdown/kit/preset/commonmark';
 import { history } from '@milkdown/kit/plugin/history';
 import { listener, listenerCtx } from '@milkdown/kit/plugin/listener';
@@ -60,6 +61,31 @@ const EditorCore: React.FC<EditorCoreProps> = ({
         document.addEventListener('stipple:image-upload', handler)
         return () => document.removeEventListener('stipple:image-upload', handler)
     }, [])
+
+    // Helper: move cursor to end of document and scroll into view.
+    // Delayed by 500ms so the CSS entrance animation on .app__editor-area
+    // (popup-slide-in: 80ms delay + 350ms = 430ms total) has completed and
+    // the scroll container has its final dimensions.
+    const focusEnd = () => {
+        setTimeout(() => {
+            const editor = getEditor();
+            if (!editor) return;
+            editor.action((ctx) => {
+                const view = ctx.get(editorViewCtx);
+                const end = TextSelection.atEnd(view.state.doc);
+                const tr = view.state.tr.setSelection(end).scrollIntoView();
+                view.dispatch(tr);
+                view.focus();
+            });
+        }, 500);
+    };
+
+    // Popup: the whole page is destroyed/recreated on open, so `loading`
+    // transitions true→false on every open. Run focusEnd once it's ready.
+    useEffect(() => {
+        if (loading) return;
+        focusEnd();
+    }, [loading]);
 
     useEditor((root) =>
         MilkdownEditor.make()

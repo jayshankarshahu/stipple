@@ -11,6 +11,15 @@
         "default_path": "index.html",
         "default_title": "Stipple"
     },
+    "commands": {
+        "_execute_action": {
+            "suggested_key": {
+                "default": "Alt+B",
+                "mac": "Alt+B"
+            },
+            "description": "Open Stipple notes panel"
+        }
+    },
     "permissions": [
         "storage",
         "sidePanel"
