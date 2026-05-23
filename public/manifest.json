@@ -1,15 +1,15 @@
 {
     "manifest_version": 3,
-    "name": "Stipple",
+    "name": "Sidelog",
     "description": "A Notion-inspired dark mode note-taking extension with markdown, tags, and timeline view.",
     "version": "2.0.1",
     "action": {
         "default_popup": "index.html",
-        "default_title": "Stipple"
+        "default_title": "Sidelog"
     },
     "side_panel": {
         "default_path": "index.html",
-        "default_title": "Stipple"
+        "default_title": "Sidelog"
     },
     "commands": {
         "_execute_action": {
@@ -17,7 +17,7 @@
                 "default": "Alt+B",
                 "mac": "Alt+B"
             },
-            "description": "Open Stipple notes panel"
+            "description": "Open Sidelog notes panel"
         }
     },
     "permissions": [

@@ -58,8 +58,8 @@ const EditorCore: React.FC<EditorCoreProps> = ({
             setTimeout(() => resolve(localUrl), 1000)
             // Real API: uploadToServer(file).then(url => resolve(url))
         }
-        document.addEventListener('stipple:image-upload', handler)
-        return () => document.removeEventListener('stipple:image-upload', handler)
+        document.addEventListener('sidelog:image-upload', handler)
+        return () => document.removeEventListener('sidelog:image-upload', handler)
     }, [])
 
     // Helper: move cursor to end of document and scroll into view.

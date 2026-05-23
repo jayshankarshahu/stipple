@@ -1,9 +1,9 @@
-# Stipple Chrome Extension - Agent Documentation
+# Sidelog Chrome Extension - Agent Documentation
 
-This file provides context and architectural overview for AI agents working on the "Stipple" project.
+This file provides context and architectural overview for AI agents working on the "Sidelog" project.
 
 ## Project Overview
-**Stipple** is a Notion-inspired dark-mode note-taking Chrome extension. It operates mainly within the Chrome Side Panel API, offering daily markdown notes, tag management, and a timeline view. It has an integrated Next.js backend for handling external functionalities such as image uploads.
+**Sidelog** is a Notion-inspired dark-mode note-taking Chrome extension. It operates mainly within the Chrome Side Panel API, offering daily markdown notes, tag management, and a timeline view. It has an integrated Next.js backend for handling external functionalities such as image uploads.
 
 ## Exhaustive Features List
 - **Core Note-Taking & Editor**
@@ -72,7 +72,7 @@ A headless Next.js app serving as the API backend for the extension.
 ## Recent Context & Milestones
 - **Side Panel Migration**: The extension migrated from a basic popup to utilizing the `chrome.sidePanel` API for a persistent sidebar experience.
 - **Slash Commands**: Replaced basic typing with a modular command registry for `/` shortcuts.
-- **Image Uploads**: Added functionality to intercept `stipple:image-upload` events in the editor, POSTing them to the Next.js backend, and receiving a public URL (Cloudflare R2).
+- **Image Uploads**: Added functionality to intercept `sidelog:image-upload` events in the editor, POSTing them to the Next.js backend, and receiving a public URL (Cloudflare R2).
 
 ## AI Agent Guidelines
 - **CSS**: The project uses component-scoped plain CSS (e.g. `Editor.css`, `SlashMenu.css`). Do NOT introduce Tailwind or other CSS frameworks unless requested.

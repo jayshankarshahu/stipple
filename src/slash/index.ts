@@ -3,7 +3,7 @@ import { usePluginViewFactory } from '@prosemirror-adapter/react'
 import type { Ctx } from '@milkdown/kit/ctx'
 import { SlashMenu } from './SlashMenu'
 
-const slash = slashFactory('stippleSlash')
+const slash = slashFactory('sidelogSlash')
 
 /**
  * Shared mutable ref written by SlashMenu on every render.
