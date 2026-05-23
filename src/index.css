@@ -15,24 +15,24 @@
   --text-secondary: #9B9B9B;
   --text-muted: #6b6b6b;
 
-  /* Accent — Blue family */
-  --accent: #447ACB;
-  --accent-hover: #2B58A9;
-  --accent-glow: rgba(68, 122, 203, 0.18);
+  /* Accent — Gold family */
+  --accent: #d4a847;
+  --accent-hover: #b58c30;
+  --accent-glow: rgba(212, 168, 71, 0.18);
 
   /* Borders & surfaces */
   --border: #2F3438;
   --border-color: #2F3438;
-  --tag-bg: rgba(68, 122, 203, 0.12);
-  --tag-text: #447ACB;
+  --tag-bg: rgba(212, 168, 71, 0.12);
+  --tag-text: #d4a847;
 
   /* Semantic */
   --danger: #BE524B;
   --success: #4F9768;
   --accent-red: #BE524B;
   --accent-green: #4F9768;
-  --accent-blue: #447ACB;
-  --accent-blue-hover: #2B58A9;
+  --accent-blue: #d4a847;
+  --accent-blue-hover: #b58c30;
 
   /* Typography */
   --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -61,14 +61,14 @@
   --text-secondary: #555555;
   --text-muted: #9b9b9b;
 
-  --accent: #447ACB;
-  --accent-hover: #2B58A9;
-  --accent-glow: rgba(68, 122, 203, 0.15);
+  --accent: #d4a847;
+  --accent-hover: #b58c30;
+  --accent-glow: rgba(212, 168, 71, 0.15);
 
   --border: #dddbd7;
   --border-color: #dddbd7;
-  --tag-bg: rgba(68, 122, 203, 0.1);
-  --tag-text: #447ACB;
+  --tag-bg: rgba(212, 168, 71, 0.1);
+  --tag-text: #d4a847;
 
   --danger: #BE524B;
   --success: #4F9768;
@@ -183,6 +183,6 @@ body {
 /* ─── Selection ─── */
 
 ::selection {
-  background-color: rgba(68, 122, 203, 0.25);
+  background-color: rgba(212, 168, 71, 0.25);
   color: var(--text-primary);
 }
